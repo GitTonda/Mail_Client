@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<StackPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="600.0" prefWidth="900.0"
+           xmlns="http://javafx.com/javafx/21"
+           fx:controller="com.example.mail_client.controller.Client_Controller">
+
+    <SplitPane fx:id="main_app_pane" dividerPositions="0.35" visible="false">
+        <items>
+            <VBox spacing="10.0">
+                <padding>
+                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                </padding>
+                <HBox alignment="CENTER_LEFT">
+                    <Label text="Inbox" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Button fx:id="button_refresh" text="Refresh" onAction="#on_refresh_clicked"/>
+                </HBox>
+                <ListView fx:id="email_list_view" VBox.vgrow="ALWAYS"/>
+            </VBox>
+
+            <BorderPane>
+                <padding>
+                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                </padding>
+                <top>
+                    <HBox alignment="CENTER_RIGHT" spacing="10.0" BorderPane.alignment="CENTER">
+                        <padding>
+                            <Insets bottom="10.0"/>
+                        </padding>
+                        <Button fx:id="button_write_new" text="Write New Mail" onAction="#on_write_new_clicked"/>
+                    </HBox>
+                </top>
+                <center>
+                    <StackPane BorderPane.alignment="CENTER">
+                        <VBox fx:id="read_mail_pane" spacing="10.0" visible="true">
+                            <Label fx:id="label_read_subject" text="Select an email to read"
+                                   style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+                            <Label fx:id="label_read_sender" text="From: "/>
+                            <Label fx:id="label_read_date" text="Date: "/>
+                            <Separator/>
+                            <TextArea fx:id="text_read_body" editable="false" wrapText="true" VBox.vgrow="ALWAYS"/>
+                        </VBox>
+                        <VBox fx:id="compose_mail_pane" spacing="10.0" visible="false">
+                            <Label text="New Email" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+                            <HBox alignment="CENTER_LEFT" spacing="10.0">
+                                <Label text="To:"/>
+                                <TextField fx:id="text_compose_to" HBox.hgrow="ALWAYS" promptText="mario@mia.mail.com"/>
+                            </HBox>
+                            <HBox alignment="CENTER_LEFT" spacing="10.0">
+                                <Label text="Subject:"/>
+                                <TextField fx:id="text_compose_subject" HBox.hgrow="ALWAYS"
+                                           promptText="Enter subject..."/>
+                            </HBox>
+                            <TextArea fx:id="text_compose_body" wrapText="true" VBox.vgrow="ALWAYS"
+                                      promptText="Write your message here..."/>
+                            <HBox alignment="CENTER_RIGHT" spacing="10.0">
+                                <Button text="Cancel" onAction="#on_cancel_compose_clicked"/>
+                                <Button text="Send" onAction="#on_send_clicked" style="-fx-font-weight: bold;"/>
+                            </HBox>
+                        </VBox>
+                    </StackPane>
+                </center>
+            </BorderPane>
+        </items>
+    </SplitPane>
+
+    <VBox fx:id="login_pane" alignment="CENTER" spacing="15.0" style="-fx-background-color: #f4f4f4;">
+        <Label text="Welcome to Mail Client" style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+
+        <VBox maxWidth="300.0" spacing="10.0" alignment="CENTER">
+            <Label text="Email Address:" VBox.vgrow="NEVER" maxWidth="Infinity"/>
+            <TextField fx:id="text_username" promptText="e.g., giorgio@mia.mail.com"/>
+
+            <Label text="Password:" VBox.vgrow="NEVER" maxWidth="Infinity"/>
+            <PasswordField fx:id="text_password" promptText="Enter password"/>
+
+            <Button fx:id="button_login" text="Login" onAction="#on_login_clicked" prefWidth="300.0"
+                    style="-fx-font-weight: bold;"/>
+
+            <ProgressIndicator fx:id="progress_login" visible="false" prefHeight="30.0" prefWidth="30.0"/>
+
+            <Label fx:id="label_login_error" textFill="RED" wrapText="true"/>
+        </VBox>
+    </VBox>
+
+</StackPane>

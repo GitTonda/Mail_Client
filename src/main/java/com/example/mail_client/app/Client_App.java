@@ -13,24 +13,22 @@ import java.util.Objects;
 public class Client_App extends Application
 {
     private static final String PATH = "/com/example/mail_client/client_gui.fxml";
-    private Client_Model model;
 
-    /**
-     * Starts the JavaFX application.
-     *
-     * @param stage the primary stage for this application
-     * @throws IOException if the FXML file cannot be loaded
-     */
     @Override
     public void start (Stage stage) throws IOException
     {
-        model = new Client_Model ();
+        // Client Model
+        Client_Model model = new Client_Model ();
+
+        // GUI and Controller
         FXMLLoader fxmlLoader = new FXMLLoader (Client_App.class.getResource (PATH));
         Scene scene = new Scene (fxmlLoader.load (), 900, 600);
         scene.getStylesheets ().add (
                 Objects.requireNonNull (getClass ().getResource ("/com/example/mail_client/styles.css"))
                         .toExternalForm ());
         ((Client_Controller) fxmlLoader.getController ()).set_model (model);
+
+        // Display GUI
         stage.setTitle ("Mail Client");
         stage.setScene (scene);
         stage.show ();

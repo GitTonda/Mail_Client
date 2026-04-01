@@ -1,50 +1,50 @@
 package com.example.mail_client.model;
 
+import com.example.shared.data.Json_Mapper;
 import com.example.shared.data.Package;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.Socket;
 
 public class Network_Manager
 {
-    private final String SERVER_ADDRESS;
-    private final int PORT;
+    private final String SERVER_IP;
+    private final int SERVER_PORT;
 
-    /**
-     * Constructor for Network_Manager.
-     *
-     * @param server_address the server address
-     * @param port           the server port
-     */
     public Network_Manager (String server_address, int port)
     {
-        SERVER_ADDRESS = server_address;
-        PORT = port;
+        SERVER_IP = server_address;
+        SERVER_PORT = port;
     }
 
-    /**
-     * Sends a package to the server and returns the response package.
-     *
-     * @param pkg the package to send
-     * @return the response package from the server, or null if an error occurs
-     */
     public Package send_package (Package pkg)
     {
-        try (Socket socket = new Socket (SERVER_ADDRESS, PORT);
-             ObjectOutputStream out = new ObjectOutputStream (socket.getOutputStream ());
-             ObjectInputStream in = new ObjectInputStream (socket.getInputStream ()))
+        try (Socket socket = new Socket (SERVER_IP, SERVER_PORT);
+             PrintWriter out = new PrintWriter (socket.getOutputStream (), true);
+             BufferedReader in = new BufferedReader (new InputStreamReader (socket.getInputStream ())))
         {
-            out.writeObject (pkg);
-            out.flush ();
-            Object response = in.readObject ();
-            return response instanceof Package ? (Package) response : null;
+            String json_request = Json_Mapper.get ().writeValueAsString (pkg);
+            out.println (json_request);
+
+            String json_response = in.readLine ();
+            if (json_response != null) return Json_Mapper.get ().readValue (json_response, Package.class);
         }
-        catch (IOException | ClassNotFoundException e)
+        catch (Exception e)
         {
-            // Logging or error handling could go here
-            return null;
+            System.err.println ("Network error: " + e.getMessage ());
         }
+        return null;
+    }
+
+    public String get_IP ()
+    {
+        return SERVER_IP;
+    }
+
+    public int get_PORT ()
+    {
+        return SERVER_PORT;
     }
 }

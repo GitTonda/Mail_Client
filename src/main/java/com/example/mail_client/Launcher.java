@@ -5,12 +5,7 @@ import javafx.application.Application;
 
 public class Launcher
 {
-    /**
-     * Main entry point for the application.
-     *
-     * @param args command line arguments
-     */
-    public static void main (String[] args)
+    static void main (String[] args)
     {
         Application.launch (Client_App.class, args);
     }

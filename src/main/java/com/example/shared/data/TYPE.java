@@ -1,8 +1,5 @@
 package com.example.shared.data;
 
-/**
- * Enum defining the types of packages for network communication.
- */
 public enum TYPE
 {
     LOGIN,

@@ -2,6 +2,10 @@ module com.example.mail_client {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.desktop;
+    requires com.fasterxml.jackson.databind;
+    requires com.fasterxml.jackson.datatype.jsr310;
+
+    opens com.example.shared.data to com.fasterxml.jackson.databind;
 
     opens com.example.mail_client to javafx.fxml;
     exports com.example.mail_client;

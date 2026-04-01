@@ -1,0 +1,130 @@
+/* ==============================================
+   FRESH GREY GLASSMORPHISM THEME
+   ============================================== */
+.root {
+    -fx-font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    /* Soft, fresh greyish-blue gradient background */
+    -fx-background-color: linear-gradient(to bottom right, #f0f4f8, #d9e2ec);
+    -fx-font-size: 14px;
+}
+
+.label {
+    -fx-text-fill: #334e68; /* Deep grey-blue for crisp readability */
+}
+
+/* ==============================================
+   GLASSY BUTTONS
+   ============================================== */
+.button {
+    -fx-background-color: rgba(255, 255, 255, 0.4);
+    -fx-border-color: rgba(255, 255, 255, 0.8);
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-text-fill: #334e68;
+    -fx-padding: 8px 16px;
+    -fx-cursor: hand;
+    -fx-font-weight: bold;
+    /* Soft glass shadow */
+    -fx-effect: dropshadow(gaussian, rgba(16, 42, 67, 0.08), 8, 0, 0, 4);
+}
+
+.button:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.7);
+    -fx-effect: dropshadow(gaussian, rgba(16, 42, 67, 0.12), 10, 0, 0, 5);
+}
+
+.button:pressed {
+    -fx-background-color: rgba(255, 255, 255, 0.3);
+    -fx-effect: none;
+}
+
+/* Primary actions (Login, Send, Write New) */
+.primary-button {
+    -fx-background-color: rgba(255, 255, 255, 0.8);
+    -fx-border-color: #bcccdc;
+    -fx-text-fill: #102a43;
+}
+
+/* Danger action (Delete) */
+.danger-button {
+    -fx-text-fill: #e53e3e; /* Soft Red text */
+    -fx-background-color: rgba(254, 226, 226, 0.4);
+    -fx-border-color: rgba(254, 226, 226, 0.8);
+}
+
+.danger-button:hover {
+    -fx-background-color: rgba(254, 226, 226, 0.7);
+}
+
+/* Action button (Forward) */
+.action-button {
+    -fx-text-fill: #3182ce; /* Soft Blue text */
+    -fx-background-color: rgba(235, 248, 255, 0.4);
+    -fx-border-color: rgba(235, 248, 255, 0.8);
+}
+
+.action-button:hover {
+    -fx-background-color: rgba(235, 248, 255, 0.7);
+}
+
+/* ==============================================
+   TRANSPARENT INPUT FIELDS
+   ============================================== */
+.text-field, .password-field, .text-area {
+    -fx-background-color: rgba(255, 255, 255, 0.5);
+    -fx-background-radius: 8;
+    -fx-border-color: rgba(255, 255, 255, 0.9);
+    -fx-border-radius: 8;
+    -fx-padding: 8px;
+    -fx-text-fill: #102a43;
+}
+
+.text-field:focused, .password-field:focused, .text-area:focused {
+    -fx-background-color: rgba(255, 255, 255, 0.8);
+    -fx-border-color: #9fb3c8;
+}
+
+/* Make text area background totally clear */
+.text-area .content {
+    -fx-background-color: transparent;
+}
+
+/* ==============================================
+   GLASSY LIST VIEW (The Inbox)
+   ============================================== */
+.list-view {
+    -fx-background-color: rgba(255, 255, 255, 0.3);
+    -fx-border-color: rgba(255, 255, 255, 0.6);
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+}
+
+.list-cell {
+    -fx-background-color: transparent;
+    -fx-padding: 12px;
+    -fx-text-fill: #334e68;
+    -fx-border-color: transparent transparent rgba(16, 42, 67, 0.05) transparent;
+}
+
+.list-cell:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.4);
+    -fx-cursor: hand;
+}
+
+.list-cell:selected {
+    -fx-background-color: rgba(255, 255, 255, 0.8);
+    -fx-text-fill: #102a43;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(gaussian, rgba(16, 42, 67, 0.05), 4, 0, 0, 2);
+}
+
+/* ==============================================
+   SPLIT PANE
+   ============================================== */
+.split-pane {
+    -fx-background-color: transparent;
+}
+
+.split-pane *.split-pane-divider {
+    -fx-background-color: rgba(16, 42, 67, 0.1); /* Very subtle dark line */
+}

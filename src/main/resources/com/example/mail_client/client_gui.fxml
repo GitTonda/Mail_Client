@@ -5,7 +5,8 @@
 <?import javafx.scene.layout.*?>
 <StackPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="600.0" prefWidth="900.0"
            xmlns="http://javafx.com/javafx/21"
-           fx:controller="com.example.mail_client.controller.Client_Controller">
+           fx:controller="com.example.mail_client.controller.Client_Controller"
+           stylesheets="@styles.css">
 
     <SplitPane fx:id="main_app_pane" dividerPositions="0.35" visible="false">
         <items>
@@ -30,19 +31,32 @@
                         <padding>
                             <Insets bottom="10.0"/>
                         </padding>
-                        <Button fx:id="button_write_new" text="Write New Mail" onAction="#on_write_new_clicked"/>
+                        <Button fx:id="button_write_new" text="Write New Mail" onAction="#on_write_new_clicked"
+                                styleClass="primary-button"/>
                     </HBox>
                 </top>
                 <center>
                     <StackPane BorderPane.alignment="CENTER">
+
                         <VBox fx:id="read_mail_pane" spacing="10.0" visible="true">
-                            <Label fx:id="label_read_subject" text="Select an email to read"
-                                   style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+                            <HBox alignment="CENTER_LEFT" spacing="10.0">
+                                <Label fx:id="label_read_subject" text="Select an email to read"
+                                       style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+                                <Region HBox.hgrow="ALWAYS"/>
+                                <Button fx:id="button_reply" text="Reply" onAction="#on_reply_clicked"
+                                        styleClass="action-button"/>
+                                <Button fx:id="button_forward" text="Forward" onAction="#on_forward_clicked"
+                                        styleClass="action-button"/>
+                                <Button fx:id="button_delete" text="Delete" onAction="#on_delete_clicked"
+                                        styleClass="danger-button"/>
+                            </HBox>
+
                             <Label fx:id="label_read_sender" text="From: "/>
                             <Label fx:id="label_read_date" text="Date: "/>
                             <Separator/>
                             <TextArea fx:id="text_read_body" editable="false" wrapText="true" VBox.vgrow="ALWAYS"/>
                         </VBox>
+
                         <VBox fx:id="compose_mail_pane" spacing="10.0" visible="false">
                             <Label text="New Email" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
                             <HBox alignment="CENTER_LEFT" spacing="10.0">
@@ -57,17 +71,19 @@
                             <TextArea fx:id="text_compose_body" wrapText="true" VBox.vgrow="ALWAYS"
                                       promptText="Write your message here..."/>
                             <HBox alignment="CENTER_RIGHT" spacing="10.0">
-                                <Button text="Cancel" onAction="#on_cancel_compose_clicked"/>
-                                <Button text="Send" onAction="#on_send_clicked" style="-fx-font-weight: bold;"/>
+                                <Button text="Cancel" onAction="#on_cancel_compose_clicked"
+                                        styleClass="secondary-button"/>
+                                <Button text="Send" onAction="#on_send_clicked" styleClass="primary-button"/>
                             </HBox>
                         </VBox>
+
                     </StackPane>
                 </center>
             </BorderPane>
         </items>
     </SplitPane>
 
-    <VBox fx:id="login_pane" alignment="CENTER" spacing="15.0" style="-fx-background-color: #f4f4f4;">
+    <VBox fx:id="login_pane" alignment="CENTER" spacing="15.0" style="-fx-background-color: transparent;">
         <Label text="Welcome to Mail Client" style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
 
         <VBox maxWidth="300.0" spacing="10.0" alignment="CENTER">
@@ -78,11 +94,11 @@
             <PasswordField fx:id="text_password" promptText="Enter password"/>
 
             <Button fx:id="button_login" text="Login" onAction="#on_login_clicked" prefWidth="300.0"
-                    style="-fx-font-weight: bold;"/>
+                    styleClass="primary-button"/>
 
             <ProgressIndicator fx:id="progress_login" visible="false" prefHeight="30.0" prefWidth="30.0"/>
 
-            <Label fx:id="label_login_error" textFill="RED" wrapText="true"/>
+            <Label fx:id="label_login_error" textFill="#e53e3e" wrapText="true"/>
         </VBox>
     </VBox>
 

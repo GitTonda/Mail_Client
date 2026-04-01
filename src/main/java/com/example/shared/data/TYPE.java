@@ -8,5 +8,7 @@ public enum TYPE
     LOGIN,
     SEND_EMAIL,
     REQUEST_INBOX,
-    ANSWER
+    DELETE_EMAIL,
+    ANSWER,
+    FORWARD
 }

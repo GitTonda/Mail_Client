@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class Client_App extends Application
 {
@@ -26,6 +27,9 @@ public class Client_App extends Application
         model = new Client_Model ();
         FXMLLoader fxmlLoader = new FXMLLoader (Client_App.class.getResource (PATH));
         Scene scene = new Scene (fxmlLoader.load (), 900, 600);
+        scene.getStylesheets ().add (
+                Objects.requireNonNull (getClass ().getResource ("/com/example/mail_client/styles.css"))
+                        .toExternalForm ());
         ((Client_Controller) fxmlLoader.getController ()).set_model (model);
         stage.setTitle ("Mail Client");
         stage.setScene (scene);

@@ -2,6 +2,7 @@ package com.example.mail_client.model;
 
 import com.example.shared.data.Email;
 import com.example.shared.data.Package;
+import com.example.shared.data.TYPE;
 import com.example.shared.data.User;
 
 import java.time.LocalDateTime;
@@ -45,11 +46,16 @@ public class Client_Model
      * @return a list of emails in the user's inbox
      * @throws IllegalStateException if the user is not logged in
      */
-    public List <Email> get_inbox (User user)
+    /**
+     * Fetches the inbox for the specified user.
+     * If last_id is provided, the server only returns emails newer than that ID.
+     */
+    public List <Email> get_inbox (User user, String last_id)
     {
         if (! logged_in) throw new IllegalStateException ("Cannot fetch inbox: User is not logged in.");
 
-        Package response = network_manager.send_package (new Package (REQUEST_INBOX, user, null, null, null));
+        // Pass the last_id into the message slot of the Package
+        Package response = network_manager.send_package (new Package (REQUEST_INBOX, user, null, null, last_id));
 
         if (response == null)
         {
@@ -76,6 +82,51 @@ public class Client_Model
         Email email = new Email (UUID.randomUUID ().toString (), sender, receivers, subject, text,
                                  LocalDateTime.now ());
         Package response = network_manager.send_package (new Package (SEND_EMAIL, sender, email, null, null));
+
+        if (response == null)
+        {
+            logged_in = false;
+            throw new IllegalStateException ("SERVER_OFFLINE");
+        }
+    }
+
+    /**
+     * Sends a request to the server to delete a specific email.
+     *
+     * @param user  the user requesting the deletion
+     * @param email the email to be deleted
+     * @throws IllegalStateException if the user is not logged in or the server is offline
+     */
+    public void delete_email (User user, Email email)
+    {
+        if (! logged_in) throw new IllegalStateException ("Cannot delete email: User is not logged in.");
+
+        Package response = network_manager.send_package (new Package (DELETE_EMAIL, user, email, null, null));
+
+        if (response == null)
+        {
+            logged_in = false;
+            throw new IllegalStateException ("SERVER_OFFLINE");
+        }
+    }
+
+    public void process_outgoing_email (TYPE action_type, User sender, List <User> receivers, String subject,
+                                        String text, Email original_email)
+    {
+        if (! logged_in) throw new IllegalStateException ("Cannot send email: User is not logged in.");
+
+        Email new_email = new Email (UUID.randomUUID ().toString (), sender, receivers, subject, text,
+                                     LocalDateTime.now ());
+
+        // If it's a reply or forward, package the original email into the list slot
+        List <Email> context_list = null;
+        if ((action_type == ANSWER || action_type == FORWARD) && original_email != null)
+        {
+            context_list = List.of (original_email);
+        }
+
+        Package pkg = new Package (action_type, sender, new_email, context_list, null);
+        Package response = network_manager.send_package (pkg);
 
         if (response == null)
         {

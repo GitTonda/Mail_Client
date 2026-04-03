@@ -1,122 +1,140 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<StackPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="600.0" prefWidth="900.0"
-           xmlns="http://javafx.com/javafx/21"
-           fx:controller="com.example.mail_client.controller.Client_Controller"
-           stylesheets="@styles.css">
+<StackPane xmlns:fx="http://javafx.com/fxml/1" fx:id="root_pane" prefHeight="650.0" prefWidth="1000.0"
+           stylesheets="@styles.css" xmlns="http://javafx.com/javafx/21"
+           fx:controller="com.example.mail_client.controller.Client_Controller">
 
-    <SplitPane fx:id="main_app_pane" dividerPositions="0.35" visible="false">
-        <items>
-            <VBox spacing="10.0">
-                <padding>
-                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
-                </padding>
-                <HBox alignment="CENTER_LEFT" spacing="10.0">
-                    <Label text="Inbox" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
-                    <Region HBox.hgrow="ALWAYS"/>
+    <SplitPane fx:id="main_app_pane" dividerPositions="0.30" visible="false">
+
+        <VBox spacing="15.0">
+            <padding>
+                <Insets bottom="15.0" left="15.0" right="10.0" top="15.0"/>
+            </padding>
+
+            <HBox alignment="CENTER_LEFT" spacing="10.0">
+                <Label text="Inbox" styleClass="header-label"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button fx:id="button_refresh" text="Refresh" onAction="#on_refresh_clicked"
+                        styleClass="secondary-button"/>
+            </HBox>
+
+            <ListView fx:id="email_list_view" VBox.vgrow="ALWAYS"/>
+        </VBox>
+
+        <BorderPane>
+            <padding>
+                <Insets bottom="15.0" left="10.0" right="15.0" top="15.0"/>
+            </padding>
+
+            <top>
+                <HBox alignment="CENTER_LEFT" spacing="15.0" BorderPane.alignment="CENTER">
+                    <padding>
+                        <Insets bottom="15.0"/>
+                    </padding>
+
                     <Label fx:id="label_connection_status" text="⚫ OFFLINE"
                            style="-fx-font-weight: bold; -fx-text-fill: #e53e3e;"/>
-                    <Button fx:id="button_refresh" text="Refresh" onAction="#on_refresh_clicked"/>
+
+                    <ToggleButton fx:id="toggle_theme" text="Dark Mode" minWidth="-Infinity"
+                                  onAction="#on_theme_toggled" styleClass="secondary-button"/>
+
+                    <Region HBox.hgrow="ALWAYS"/>
+
+                    <Button fx:id="button_write_new" text="Write New Mail" onAction="#on_write_new_clicked"
+                            styleClass="primary-button"/>
                 </HBox>
-                <ListView fx:id="email_list_view" VBox.vgrow="ALWAYS"/>
-            </VBox>
+            </top>
 
-            <BorderPane>
-                <padding>
-                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
-                </padding>
-                <top>
-                    <HBox alignment="CENTER_RIGHT" spacing="10.0" BorderPane.alignment="CENTER">
-                        <padding>
-                            <Insets bottom="10.0"/>
-                        </padding>
-                        <Button fx:id="button_write_new" text="Write New Mail" onAction="#on_write_new_clicked"
-                                styleClass="primary-button"/>
-                    </HBox>
-                </top>
-                <center>
-                    <StackPane BorderPane.alignment="CENTER">
+            <center>
+                <StackPane BorderPane.alignment="CENTER">
 
-                        <VBox fx:id="read_mail_pane" spacing="15.0" visible="true">
+                    <VBox fx:id="read_mail_pane" spacing="15.0" visible="true">
+                        <Label fx:id="label_read_subject" text="Select an email to read" styleClass="read-subject"
+                               wrapText="true"/>
 
-                            <Label fx:id="label_read_subject" text="Select an email to read"
-                                   style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #102a43;"
-                                   wrapText="true"/>
+                        <HBox alignment="CENTER_LEFT" spacing="10.0">
+                            <VBox spacing="4.0" HBox.hgrow="SOMETIMES">
+                                <Label fx:id="label_read_sender" text="From: " styleClass="read-sender"/>
+                                <Label fx:id="label_read_date" text="Date: " styleClass="read-date"/>
+                            </VBox>
 
-                            <HBox alignment="CENTER_LEFT" spacing="10.0">
+                            <Region HBox.hgrow="ALWAYS"/>
 
-                                <VBox spacing="4.0" HBox.hgrow="SOMETIMES">
-                                    <Label fx:id="label_read_sender" text="From: "
-                                           style="-fx-font-weight: bold; -fx-font-size: 14px;"/>
-                                    <Label fx:id="label_read_date" text="Date: "
-                                           style="-fx-text-fill: #718096; -fx-font-size: 12px;"/>
-                                </VBox>
-
-                                <Region HBox.hgrow="ALWAYS"/>
-
-                                <HBox alignment="CENTER_RIGHT" spacing="8.0">
-                                    <Button fx:id="button_reply" text="Reply" minWidth="-Infinity"
-                                            onAction="#on_reply_clicked" styleClass="action-button"/>
-                                    <Button fx:id="button_reply_all" text="Reply All" minWidth="-Infinity"
-                                            onAction="#on_reply_all_clicked" styleClass="action-button"/>
-                                    <Button fx:id="button_forward" text="Forward" minWidth="-Infinity"
-                                            onAction="#on_forward_clicked" styleClass="action-button"/>
-                                    <Button fx:id="button_delete" text="Delete" minWidth="-Infinity"
-                                            onAction="#on_delete_clicked" styleClass="danger-button"/>
-                                </HBox>
-
+                            <HBox alignment="CENTER_RIGHT" spacing="8.0">
+                                <Button fx:id="button_reply" text="Reply" minWidth="-Infinity"
+                                        onAction="#on_reply_clicked" styleClass="action-button"/>
+                                <Button fx:id="button_reply_all" text="Reply All" minWidth="-Infinity"
+                                        onAction="#on_reply_all_clicked" styleClass="action-button"/>
+                                <Button fx:id="button_forward" text="Forward" minWidth="-Infinity"
+                                        onAction="#on_forward_clicked" styleClass="action-button"/>
+                                <Button fx:id="button_delete" text="Delete" minWidth="-Infinity"
+                                        onAction="#on_delete_clicked" styleClass="danger-button"/>
                             </HBox>
+                        </HBox>
 
-                            <Separator/>
-                            <TextArea fx:id="text_read_body" editable="false" wrapText="true" VBox.vgrow="ALWAYS"
-                                      style="-fx-font-size: 14px;"/>
-                        </VBox>
+                        <Separator/>
 
-                        <VBox fx:id="compose_mail_pane" spacing="10.0" visible="false">
-                            <Label text="New Email" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
-                            <HBox alignment="CENTER_LEFT" spacing="10.0">
-                                <Label text="To:"/>
-                                <TextField fx:id="text_compose_to" HBox.hgrow="ALWAYS" promptText="mario@mia.mail.com"/>
-                            </HBox>
-                            <HBox alignment="CENTER_LEFT" spacing="10.0">
-                                <Label text="Subject:"/>
-                                <TextField fx:id="text_compose_subject" HBox.hgrow="ALWAYS"
-                                           promptText="Enter subject..."/>
-                            </HBox>
-                            <TextArea fx:id="text_compose_body" wrapText="true" VBox.vgrow="ALWAYS"
-                                      promptText="Write your message here..."/>
-                            <HBox alignment="CENTER_RIGHT" spacing="10.0">
-                                <Button text="Cancel" onAction="#on_cancel_compose_clicked"
-                                        styleClass="secondary-button"/>
-                                <Button text="Send" onAction="#on_send_clicked" styleClass="primary-button"/>
-                            </HBox>
-                        </VBox>
+                        <TextArea fx:id="text_read_body" editable="false" wrapText="true" VBox.vgrow="ALWAYS"/>
+                    </VBox>
 
-                    </StackPane>
-                </center>
-            </BorderPane>
-        </items>
+                    <VBox fx:id="compose_mail_pane" spacing="15.0" visible="false">
+                        <Label text="Compose Email" styleClass="header-label"/>
+
+                        <HBox alignment="CENTER_LEFT" spacing="10.0">
+                            <Label text="To:" styleClass="input-label" prefWidth="60.0"/>
+                            <TextField fx:id="text_compose_to" HBox.hgrow="ALWAYS" promptText="recipient@domain.com"/>
+                        </HBox>
+
+                        <HBox alignment="CENTER_LEFT" spacing="10.0">
+                            <Label text="Subject:" styleClass="input-label" prefWidth="60.0"/>
+                            <TextField fx:id="text_compose_subject" HBox.hgrow="ALWAYS" promptText="Enter subject..."/>
+                        </HBox>
+
+                        <TextArea fx:id="text_compose_body" wrapText="true" VBox.vgrow="ALWAYS"
+                                  promptText="Write your message here..."/>
+
+                        <HBox alignment="CENTER_RIGHT" spacing="10.0">
+                            <Button text="Cancel" onAction="#on_cancel_compose_clicked" styleClass="secondary-button"/>
+                            <Button text="Send" onAction="#on_send_clicked" styleClass="primary-button"/>
+                        </HBox>
+                    </VBox>
+
+                </StackPane>
+            </center>
+        </BorderPane>
     </SplitPane>
 
-    <VBox fx:id="login_pane" alignment="CENTER" spacing="15.0" style="-fx-background-color: transparent;">
-        <Label text="Welcome to Mail Client" style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+    <VBox fx:id="login_pane" alignment="CENTER" spacing="20.0" style="-fx-background-color: #f7fafc;">
+        <Label text="Welcome to Mail Client" styleClass="title-label"/>
 
-        <VBox maxWidth="300.0" spacing="10.0" alignment="CENTER">
-            <Label text="Email Address:" VBox.vgrow="NEVER" maxWidth="Infinity"/>
+        <VBox maxWidth="320.0" spacing="12.0" alignment="CENTER_LEFT">
+            <Label text="Email Address:" styleClass="input-label"/>
             <TextField fx:id="text_username" promptText="e.g., giorgio@mia.mail.com"/>
 
-            <Label text="Password:" VBox.vgrow="NEVER" maxWidth="Infinity"/>
+            <Label text="Password:" styleClass="input-label"/>
             <PasswordField fx:id="text_password" promptText="Enter password"/>
 
-            <Button fx:id="button_login" text="Login" onAction="#on_login_clicked" prefWidth="300.0"
-                    styleClass="primary-button"/>
+            <HBox alignment="CENTER" spacing="15.0">
+                <padding>
+                    <Insets top="10.0"/>
+                </padding>
+                <Button fx:id="button_login" text="Login" onAction="#on_login_clicked" prefWidth="145.0"
+                        styleClass="primary-button"/>
+                <Button fx:id="button_register" text="Register" onAction="#on_register_clicked" prefWidth="145.0"
+                        styleClass="secondary-button"/>
+            </HBox>
 
-            <ProgressIndicator fx:id="progress_login" visible="false" prefHeight="30.0" prefWidth="30.0"/>
-
-            <Label fx:id="label_login_error" textFill="#e53e3e" wrapText="true"/>
+            <VBox alignment="CENTER" spacing="10.0">
+                <padding>
+                    <Insets top="10.0"/>
+                </padding>
+                <ProgressIndicator fx:id="progress_login" visible="false" prefHeight="30.0" prefWidth="30.0"/>
+                <Label fx:id="label_login_error" textFill="#e53e3e" wrapText="true" alignment="CENTER"
+                       textAlignment="CENTER"/>
+            </VBox>
         </VBox>
     </VBox>
 

@@ -12,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
@@ -21,6 +22,7 @@ import java.net.Socket;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static com.example.shared.data.TYPE.*;
@@ -31,6 +33,8 @@ public class Client_Controller
     // FXML INJECTIONS //
     // =============== //
 
+    @FXML
+    public StackPane root_pane;
     @FXML
     private SplitPane main_app_pane;
     @FXML
@@ -46,6 +50,8 @@ public class Client_Controller
     @FXML
     private Button button_login;
     @FXML
+    private Button button_register;
+    @FXML
     private ProgressIndicator progress_login;
 
     // --- Inbox Pane (Left) ---
@@ -53,6 +59,8 @@ public class Client_Controller
     private Button button_refresh;
     @FXML
     private ListView <Email> email_list_view;
+    @FXML
+    private ToggleButton toggle_theme;
 
     // --- Header / Toolbar ---
     @FXML
@@ -125,6 +133,23 @@ public class Client_Controller
                               });
     }
 
+    @FXML
+    public void on_theme_toggled ()
+    {
+        if (toggle_theme.isSelected ())
+        {
+            String darkThemeUrl = Objects.requireNonNull (
+                    getClass ().getResource ("/com/example/mail_client/dark-theme.css")).toExternalForm ();
+            root_pane.getStylesheets ().add (darkThemeUrl);
+            toggle_theme.setText ("Light Mode");
+        }
+        else
+        {
+            root_pane.getStylesheets ().removeIf (css -> css.contains ("dark-theme.css"));
+            toggle_theme.setText ("Dark Mode");
+        }
+    }
+
     // ============== //
     // AUTHENTICATION //
     // ============== //
@@ -192,25 +217,71 @@ public class Client_Controller
         }).start ();
     }
 
+    @FXML
+    public void on_register_clicked ()
+    {
+        String username = text_username.getText ().trim ();
+        String password = text_password.getText ();
+
+        if (username.isBlank () || password.isBlank ())
+        {
+            update_login_error ("Please enter an email and a password to register.", javafx.scene.paint.Color.RED);
+            return;
+        }
+        if (UI_Utils.is_invalid_email (username))
+        {
+            update_login_error ("Invalid email format! Must be name@domain.com", javafx.scene.paint.Color.RED);
+            return;
+        }
+
+        update_login_error ("Registering account...", javafx.scene.paint.Color.BLUE);
+        button_login.setDisable (true);
+        button_register.setDisable (true);
+        progress_login.setVisible (true);
+
+        User new_user = new User (username, password);
+
+        new Thread (() -> {
+            String status = model.register (new_user);
+
+            javafx.application.Platform.runLater (() -> {
+                progress_login.setVisible (false);
+                button_login.setDisable (false);
+                button_register.setDisable (false);
+
+                if ("SUCCESS".equals (status))
+                {
+                    update_login_error ("Registration successful! Logging in...",
+                                        javafx.scene.paint.Color.web ("#38a169"));
+                    on_login_clicked ();
+                }
+                else if (status.startsWith ("FAILURE"))
+                    update_login_error ("Username is already taken.", javafx.scene.paint.Color.RED);
+                else
+                    update_login_error ("Server offline. Cannot register right now.", javafx.scene.paint.Color.RED);
+            });
+        }).start ();
+    }
+
+
     private void transition_to_main_app ()
     {
         FadeTransition fadeOut = new FadeTransition (Duration.millis (750), login_pane);
         fadeOut.setFromValue (1.0);
         fadeOut.setToValue (0.0);
-        fadeOut.setOnFinished (_ ->
-                               {
-                                   login_pane.setVisible (false);
-                                   main_app_pane.setOpacity (0.0);
-                                   main_app_pane.setVisible (true);
+        fadeOut.setOnFinished (_ -> {
+            login_pane.setVisible (false);
+            main_app_pane.setOpacity (0.0);
+            main_app_pane.setVisible (true);
 
-                                   FadeTransition fadeIn = new FadeTransition (Duration.millis (750), main_app_pane);
-                                   fadeIn.setFromValue (0.0);
-                                   fadeIn.setToValue (1.0);
-                                   fadeIn.play ();
+            FadeTransition fadeIn = new FadeTransition (Duration.millis (750), main_app_pane);
+            fadeIn.setFromValue (0.0);
+            fadeIn.setToValue (1.0);
+            fadeIn.play ();
 
-                                   on_refresh_clicked ();
-                                   start_polling ();
-                               });
+            on_refresh_clicked ();
+            start_polling ();
+        });
         fadeOut.play ();
     }
 

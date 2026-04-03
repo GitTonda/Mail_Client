@@ -77,6 +77,21 @@ public class Client_Model
         }
     }
 
+    public String register (User user)
+    {
+        Package request = new Package (TYPE.REGISTER, user, null, null, null);
+        try
+        {
+            Package response = network_manager.send_package (request);
+            if (response != null) return response.message ();
+            return "OFFLINE";
+        }
+        catch (Exception e)
+        {
+            return "OFFLINE";
+        }
+    }
+
     public Network_Manager get_network_manager ()
     {
         return network_manager;

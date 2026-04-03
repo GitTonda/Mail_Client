@@ -1,130 +1,147 @@
-/* ==============================================
-   FRESH GREY GLASSMORPHISM THEME
-   ============================================== */
+/* =========================================================================
+   BASE APPLICATION & LIGHT THEME (styles.css)
+   ========================================================================= */
+
 .root {
-    -fx-font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-    /* Soft, fresh greyish-blue gradient background */
-    -fx-background-color: linear-gradient(to bottom right, #f0f4f8, #d9e2ec);
-    -fx-font-size: 14px;
+    /* Professional Developer Font Stack */
+    -fx-font-family: "JetBrains Mono", "Consolas", monospace;
+    -fx-background-color: #f7fafc; /* Soft Light Gray */
 }
 
-.label {
-    -fx-text-fill: #334e68; /* Deep grey-blue for crisp readability */
-}
-
-/* ==============================================
-   GLASSY BUTTONS
-   ============================================== */
-.button {
-    -fx-background-color: rgba(255, 255, 255, 0.4);
-    -fx-border-color: rgba(255, 255, 255, 0.8);
-    -fx-border-radius: 8;
-    -fx-background-radius: 8;
-    -fx-text-fill: #334e68;
-    -fx-padding: 8px 16px;
-    -fx-cursor: hand;
+/* --- TYPOGRAPHY --- */
+.title-label {
+    -fx-font-size: 24px;
     -fx-font-weight: bold;
-    /* Soft glass shadow */
-    -fx-effect: dropshadow(gaussian, rgba(16, 42, 67, 0.08), 8, 0, 0, 4);
+    -fx-text-fill: #1e293b;
 }
 
-.button:hover {
-    -fx-background-color: rgba(255, 255, 255, 0.7);
-    -fx-effect: dropshadow(gaussian, rgba(16, 42, 67, 0.12), 10, 0, 0, 5);
+.header-label {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1e293b;
 }
 
-.button:pressed {
-    -fx-background-color: rgba(255, 255, 255, 0.3);
-    -fx-effect: none;
+.read-subject {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #0f172a;
 }
 
-/* Primary actions (Login, Send, Write New) */
-.primary-button {
-    -fx-background-color: rgba(255, 255, 255, 0.8);
-    -fx-border-color: #bcccdc;
-    -fx-text-fill: #102a43;
+.read-sender {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1e293b;
 }
 
-/* Danger action (Delete) */
-.danger-button {
-    -fx-text-fill: #e53e3e; /* Soft Red text */
-    -fx-background-color: rgba(254, 226, 226, 0.4);
-    -fx-border-color: rgba(254, 226, 226, 0.8);
+.read-date, .input-label {
+    -fx-font-size: 12px;
+    -fx-text-fill: #64748b;
+    -fx-font-weight: bold;
 }
 
-.danger-button:hover {
-    -fx-background-color: rgba(254, 226, 226, 0.7);
-}
-
-/* Action button (Forward) */
-.action-button {
-    -fx-text-fill: #3182ce; /* Soft Blue text */
-    -fx-background-color: rgba(235, 248, 255, 0.4);
-    -fx-border-color: rgba(235, 248, 255, 0.8);
-}
-
-.action-button:hover {
-    -fx-background-color: rgba(235, 248, 255, 0.7);
-}
-
-/* ==============================================
-   TRANSPARENT INPUT FIELDS
-   ============================================== */
+/* --- INPUT FIELDS & TEXT AREAS --- */
 .text-field, .password-field, .text-area {
-    -fx-background-color: rgba(255, 255, 255, 0.5);
-    -fx-background-radius: 8;
-    -fx-border-color: rgba(255, 255, 255, 0.9);
-    -fx-border-radius: 8;
+    -fx-background-color: #ffffff;
+    -fx-border-color: #cbd5e1;
+    -fx-border-radius: 6px;
+    -fx-background-radius: 6px;
     -fx-padding: 8px;
-    -fx-text-fill: #102a43;
+    -fx-font-size: 14px;
+    -fx-text-fill: #1e293b;
 }
 
 .text-field:focused, .password-field:focused, .text-area:focused {
-    -fx-background-color: rgba(255, 255, 255, 0.8);
-    -fx-border-color: #9fb3c8;
+    -fx-border-color: #3b82f6; /* Bright Blue Focus */
+    -fx-background-color: #ffffff;
 }
 
-/* Make text area background totally clear */
-.text-area .content {
-    -fx-background-color: transparent;
-}
-
-/* ==============================================
-   GLASSY LIST VIEW (The Inbox)
-   ============================================== */
+/* --- LIST VIEW --- */
 .list-view {
-    -fx-background-color: rgba(255, 255, 255, 0.3);
-    -fx-border-color: rgba(255, 255, 255, 0.6);
-    -fx-border-radius: 10;
-    -fx-background-radius: 10;
+    -fx-background-color: transparent;
+    -fx-border-color: #cbd5e1;
+    -fx-border-radius: 6px;
+    -fx-background-radius: 6px;
 }
 
 .list-cell {
+    -fx-padding: 12px 10px;
+    -fx-font-size: 14px;
+    -fx-text-fill: #334155;
+    -fx-background-color: #ffffff;
+    -fx-border-width: 0 0 1px 0;
+    -fx-border-color: #f1f5f9;
+}
+
+.list-cell:empty {
     -fx-background-color: transparent;
-    -fx-padding: 12px;
-    -fx-text-fill: #334e68;
-    -fx-border-color: transparent transparent rgba(16, 42, 67, 0.05) transparent;
+    -fx-border-color: transparent;
 }
 
 .list-cell:hover {
-    -fx-background-color: rgba(255, 255, 255, 0.4);
-    -fx-cursor: hand;
+    -fx-background-color: #f8fafc;
 }
 
 .list-cell:selected {
-    -fx-background-color: rgba(255, 255, 255, 0.8);
-    -fx-text-fill: #102a43;
+    -fx-background-color: #eff6ff;
+    -fx-text-fill: #2563eb;
     -fx-font-weight: bold;
-    -fx-effect: dropshadow(gaussian, rgba(16, 42, 67, 0.05), 4, 0, 0, 2);
 }
 
-/* ==============================================
-   SPLIT PANE
-   ============================================== */
+/* --- BUTTONS --- */
+/* Master button sizing so standard and toggle buttons perfectly match */
+.button, .toggle-button {
+    -fx-font-size: 13px;
+    -fx-background-radius: 6px;
+    -fx-padding: 8px 16px;
+    -fx-cursor: hand;
+}
+
+.primary-button {
+    -fx-background-color: #3b82f6;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-border-color: transparent;
+}
+
+.primary-button:hover {
+    -fx-background-color: #2563eb;
+}
+
+.secondary-button, .action-button, .toggle-button {
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #475569;
+    -fx-border-color: #cbd5e1;
+    -fx-border-radius: 6px;
+}
+
+.secondary-button:hover, .action-button:hover, .toggle-button:hover {
+    -fx-background-color: #f1f5f9;
+}
+
+.toggle-button:selected {
+    -fx-background-color: #e2e8f0;
+    -fx-text-fill: #0f172a;
+    -fx-font-weight: bold;
+}
+
+.danger-button {
+    -fx-background-color: #ef4444; /* Solid Red */
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-border-color: transparent;
+    -fx-border-radius: 6px;
+}
+
+.danger-button:hover {
+    -fx-background-color: #dc2626;
+}
+
+/* --- SPLIT PANE --- */
 .split-pane {
     -fx-background-color: transparent;
 }
 
 .split-pane *.split-pane-divider {
-    -fx-background-color: rgba(16, 42, 67, 0.1); /* Very subtle dark line */
+    -fx-padding: 0 1px 0 1px;
+    -fx-background-color: #cbd5e1;
 }

@@ -22,7 +22,7 @@ public class Client_App extends Application
 
         // GUI and Controller
         FXMLLoader fxmlLoader = new FXMLLoader (Client_App.class.getResource (PATH));
-        Scene scene = new Scene (fxmlLoader.load (), 900, 600);
+        Scene scene = new Scene (fxmlLoader.load (), 1200, 800);
         scene.getStylesheets ().add (
                 Objects.requireNonNull (getClass ().getResource ("/com/example/mail_client/styles.css"))
                         .toExternalForm ());

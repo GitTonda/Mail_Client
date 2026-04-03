@@ -1,0 +1,111 @@
+/* =========================================================================
+   DARK MODE OVERRIDES (dark-theme.css)
+   ========================================================================= */
+
+.root {
+    -fx-background-color: #0f172a; /* Deep Midnight Slate */
+}
+
+/* --- TYPOGRAPHY OVERRIDES --- */
+.title-label, .header-label, .read-subject, .read-sender {
+    -fx-text-fill: #f8fafc; /* Crisp White */
+}
+
+.read-date, .input-label {
+    -fx-text-fill: #94a3b8; /* Slate Gray */
+}
+
+/* --- TEXT AREA & INPUT FIELD FIXES --- */
+/* Forces the hidden JavaFX "viewport" layers to be dark */
+.text-area, .text-area .viewport, .text-area .content {
+    -fx-background-color: #1e293b;
+}
+
+.text-area {
+    -fx-border-color: #334155;
+    -fx-text-fill: #f8fafc;
+}
+
+.text-area:focused {
+    -fx-border-color: #3b82f6; /* Bright Blue Focus Ring */
+}
+
+.text-field, .password-field {
+    -fx-background-color: #1e293b;
+    -fx-border-color: #334155;
+    -fx-text-fill: #f8fafc;
+}
+
+.text-field:focused, .password-field:focused {
+    -fx-border-color: #3b82f6;
+    -fx-background-color: #1e293b;
+}
+
+/* --- LIST VIEW FIXES --- */
+.list-view, .list-view .viewport {
+    -fx-background-color: #0f172a;
+    -fx-border-color: #334155;
+}
+
+.list-cell {
+    -fx-background-color: #0f172a;
+    -fx-text-fill: #cbd5e1;
+    -fx-border-color: #1e293b;
+}
+
+.list-cell:hover {
+    -fx-background-color: #1e293b;
+}
+
+.list-cell:selected {
+    -fx-background-color: #3b82f6; /* Premium Blue Highlight */
+    -fx-text-fill: white;
+}
+
+/* --- SECONDARY BUTTON OVERRIDES --- */
+/* Primary and Danger buttons are intentionally excluded so they stay Blue/Red */
+.secondary-button, .action-button, .toggle-button {
+    -fx-background-color: #1e293b;
+    -fx-text-fill: #cbd5e1;
+    -fx-border-color: #334155;
+}
+
+.secondary-button:hover, .action-button:hover, .toggle-button:hover {
+    -fx-background-color: #334155;
+}
+
+.toggle-button:selected {
+    -fx-background-color: #475569;
+    -fx-text-fill: white;
+}
+
+/* --- SPLIT PANE OVERRIDE --- */
+.split-pane *.split-pane-divider {
+    -fx-background-color: #334155;
+}
+
+/* --- SCROLLBAR OVERRIDES --- */
+/* Makes the scrollbars dark and minimal instead of blocky and white */
+.scroll-bar:horizontal, .scroll-bar:vertical {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar:horizontal .track, .scroll-bar:vertical .track {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.scroll-bar:horizontal .thumb, .scroll-bar:vertical .thumb {
+    -fx-background-color: #475569;
+    -fx-background-radius: 4px;
+}
+
+.scroll-bar:horizontal .thumb:hover, .scroll-bar:vertical .thumb:hover {
+    -fx-background-color: #64748b;
+}
+
+.scroll-bar:horizontal .increment-button, .scroll-bar:horizontal .decrement-button,
+.scroll-bar:vertical .increment-button, .scroll-bar:vertical .decrement-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
